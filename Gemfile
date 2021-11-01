@@ -61,3 +61,5 @@ gem 'line-bot-api'
 # .envファイルで環境変数を管理
 gem 'dotenv-rails'
 
+# 外部API通信用
+gem 'httpclient'
