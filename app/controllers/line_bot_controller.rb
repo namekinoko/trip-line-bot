@@ -1,11 +1,13 @@
 class LineBotController < ApplicationController
   require './app/controllers/rakuten_search_hotels_controller'
+  require './app/controllers/recruit_search_gourmets_controller'
   protect_from_forgery except: [:callback]
 
   # LineBotの処理
   def callback
     body = request.body.read
     rakuten = RakutenSearchHotelsController.new
+    recruit = RecruitSearchGourmetsController.new
 
     #LineBot 署名の検証
     signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -23,16 +25,31 @@ class LineBotController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           if event.message['text'] == '宿泊施設検索'
-             UserState.create( userid: userid, status:1 )
+             UserState.create( userid: userid, status: 1 )
              message = {
               type: 'text',
-              text: 'success'
+              text: '宿泊施設を検索'
             }
             client.reply_message( event['replyToken'], message )
+
+          elsif event.message['text'] == '飲食店検索'
+            UserState.create( userid: userid, status: 2 )
+            message = {
+              type: 'text',
+              text: '飲食店を検索'
+            }
+            client.reply_message( event['replyToken'], message )
+
           elsif UserState.exists?(userid: userid, status: 1)
             message = rakuten.search_hotel( event.message['text'] )
-             client.reply_message( event['replyToken'], message )
-             UserState.where(userid: userid).delete_all
+            client.reply_message( event['replyToken'], message )
+            UserState.where(userid: userid).delete_all
+
+          elsif UserState.exists?(userid: userid, status: 2)
+            message = recruit.search_gourmet( event.message['text'] )
+            client.reply_message( event['replyToken'], message )
+            UserState.where(userid: userid).delete_all
+
           else
             message = {
               type: 'text',

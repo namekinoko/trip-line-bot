@@ -1,0 +1,2 @@
+module RecruitSearchGourmetsHelper
+end

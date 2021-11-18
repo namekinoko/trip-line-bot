@@ -41,3 +41,5 @@ yarn-debug.log*
 
 # 環境変数ファイル
 /.env
+
+.DS_Store
