@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# 1 アプリケーション概要
+旅館と飲食店を探すline-bot
 
-Things you may want to cover:
+# 2 URL
+現在稼働させていません
 
-* Ruby version
+# 3 使用技術
+•Ruby 3.0.2
 
-* System dependencies
+•Rails 6.1.4.1
 
-* Configuration
+•PostgreSQL 14.0
 
-* Database creation
+•Line Messaging API
 
-* Database initialization
+•Hotpepper API
 
-* How to run the test suite
+•Rakuten Travel APIs
 
-* Services (job queues, cache servers, search engines, etc.)
+# 4 機能
+•飲食店検索
 
-* Deployment instructions
-
-* ...
+•旅館検索
